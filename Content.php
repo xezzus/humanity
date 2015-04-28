@@ -3,24 +3,21 @@ namespace humanity;
 
 class Content {
 
-  public $js = [];
+  public $js;
   public $css = [];
   private $path;
-  private $pathJs = __DIR__.'/../../../web/js/';
-  private $pathCss = __DIR__.'/../../../web/css/';
-  private $pathAssets = __DIR__.'/../../../web/assets/';
 
   public function __construct($path,$config=[]){
-    # Config
-    if(isset($config['pathJs']) && is_dir($config['pathJs'])) $pathJs = $config['pathJs'];
-    if(isset($config['pathCss']) && is_dir($config['pathCss'])) $pathJs = $config['pathCss'];
-    if(isset($config['pathAssets']) && is_dir($config['pathAssets'])) $pathJs = $config['pathAssets'];
     # Path
     $this->path = $path;
     # Application
     $this->app = new Application;
     # View
     $this->view = new View;
+    # Js
+    $this->js = (new Js)->instance();
+    # Css
+    $this->css = (new Css)->instance();
   }
 
   public function __destruct(){
@@ -43,14 +40,10 @@ class Content {
         return null;
       };
       $filePhtml = $getFile('phtml');
-      $fileJs = $getFile('js');
-      $fileCss = $getFile('css');
       if($filePhtml) { $currentUri = $nextUri; break; }
     }
     if($filePhtml === null) {
       $filePhtml = $path.'index.phtml';
-      $fileJs = $path.'index.js';
-      $fileCss = $path.'index.css';
     }
     /*
     # Create dir asset

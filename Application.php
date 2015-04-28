@@ -3,11 +3,12 @@ namespace humanity;
 
 class Application {
 
-  public $result;
   private $name;
+  private $singleton;
 
   public function __construct($name=''){
       $this->name = $name;
+      $this->singleton = (new Singleton)->instance();
   }
 
   public function __get($name){
@@ -15,12 +16,11 @@ class Application {
   }
 
   public function __call($name,$value){
-    $file = __DIR__.'/../../../app/'.$this->name.'/'.$name.'.php';
-    var_dump($file);
+    $file = __DIR__.'/../../../apps/'.$this->name.'/'.$name.'.php';
     if(is_file($file)) {
       $result = require($file);
-      if(is_callable($result)) $this->result = call_user_func_array($result,$value);
-      return $this->result;
+      if(is_callable($result)) $result = call_user_func_array($result,$value);
+      return $result;
     }
   }
 
