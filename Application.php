@@ -5,10 +5,12 @@ class Application {
 
   private $name;
   private $singleton;
+  private $config;
 
   public function __construct($name=''){
       $this->name = $name;
       $this->singleton = (new Singleton)->instance();
+      $this->config = (new Config)->instance()->get();
   }
 
   public function __get($name){
