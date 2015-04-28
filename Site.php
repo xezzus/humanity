@@ -7,9 +7,6 @@ class Site {
     # Load page
     $content = new Content($config['pathPage']);
     echo $content->load();
-    //$js = (new Js)->instance();
-    var_dump($content->js->list);
-    var_dump($content->css->list);
   }
 
 }
