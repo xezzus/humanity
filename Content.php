@@ -66,5 +66,15 @@ class Content {
       return $js;
   }
 
+  public function getCss(){
+      $css = $this->css->getList();
+      $css = array_unique($css);
+      $css = array_map(function($css){
+          return '<script src="'.$css.'"></script>';
+      },$css);
+      $css = implode("\n",$css);
+      return $css;
+  }
+
 }
 ?>

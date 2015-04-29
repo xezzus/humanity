@@ -18,6 +18,10 @@ class Css {
         $this->list[] = $css;
     }
 
+    public function getList(){
+        return $this->list;
+    }
+
     public function compile(){
         # ...
     }

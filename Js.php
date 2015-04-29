@@ -3,7 +3,7 @@ namespace humanity;
 
 class Js {
 
-    public static $list = [];
+    public $list = [];
     private static $instance = null;
 
     private function __clone(){
@@ -19,7 +19,7 @@ class Js {
     }
 
     public function getList(){
-        return self::$list;
+        return $this->list;
     }
 
     public function compile(){

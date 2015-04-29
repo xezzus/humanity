@@ -9,7 +9,11 @@ class Site {
     # Load page
     $content = new Content($config['paths']['page']);
     $content->load();
-    echo $content->getContent();
+    $css = $content->getCss();
+    $page = $content->getContent();
+    $page = preg_replace('/<\/head>/',"$css<\/head>",$page);
+
+    echo $page;
   }
 
 }
