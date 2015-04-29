@@ -6,6 +6,7 @@ class Content {
   public $js;
   public $css = [];
   private $path;
+  private $content;
 
   public function __construct($path,$config=[]){
     # Path
@@ -45,27 +46,24 @@ class Content {
     if($filePhtml === null) {
       $filePhtml = $path.'index.phtml';
     }
-    /*
-    # Create dir asset
-    # Js files
-    if(is_file($fileJs)) { $this->js[] = $fileJs; }
-    $assets = $this->pathAssets.'js.json';
-    touch($assets);
-    $json = json_encode($this->js);
-    file_put_contents($assets,$json);
-    # Js files
-    if(is_file($fileCss)) { $this->css[] = $fileCss; }
-    $assets = $this->pathAssets.'css.json';
-    touch($assets);
-    $json = json_encode($this->css);
-    file_put_contents($assets,$json);
-    # Phtml file
-    ob_start();
-    */
     require($filePhtml);
     $content = ob_get_clean();
     unset($key,$value);
-    return $content;
+    $this->content = $content;
+  }
+
+  public function getContent(){
+      return $this->content;
+  }
+
+  public function getJs(){
+      $js = $this->js->getList();
+      $js = array_unique($js);
+      $js = array_map(function($js){
+          return '<script src="'.$js.'"></script>';
+      },$js);
+      $js = implode("\n",$js);
+      return $js;
   }
 
 }

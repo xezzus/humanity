@@ -8,7 +8,9 @@ class Site {
     (new Config)->instance()->load($config);
     # Load page
     $content = new Content($config['pathPage']);
-    echo $content->load();
+    $content->load();
+    echo $content->getContent();
+    var_dump($content->getJs());
   }
 
 }
