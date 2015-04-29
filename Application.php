@@ -10,7 +10,7 @@ class Application {
   public function __construct($name=''){
       $this->name = $name;
       $this->singleton = (new Singleton)->instance();
-      $this->config = (new Config)->instance()->get();
+      $this->config = (new Config)->instance()->config;
   }
 
   public function __get($name){
