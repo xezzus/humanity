@@ -15,7 +15,8 @@ class Css {
     }
 
     public function add($css){
-        $this->list[] = $css;
+        if(!is_array($css)) $css = [$css];
+        $this->list = array_merge($this->list,$css);
     }
 
     public function getList(){

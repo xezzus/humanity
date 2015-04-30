@@ -15,7 +15,8 @@ class Js {
     }
 
     public function add($js){
-        self::$list[] = $js;
+        if(!is_array($js)) $js = [$js];
+        $this->list = array_merge($this->list,$js);
     }
 
     public function getList(){

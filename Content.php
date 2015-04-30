@@ -46,6 +46,7 @@ class Content {
     if($filePhtml === null) {
       $filePhtml = $path.'index.phtml';
     }
+    ob_start();
     require($filePhtml);
     $content = ob_get_clean();
     unset($key,$value);
@@ -70,7 +71,7 @@ class Content {
       $css = $this->css->getList();
       $css = array_unique($css);
       $css = array_map(function($css){
-          return '<script src="'.$css.'"></script>';
+          return '<link rel="stylesheet" href="'.$css.'">';
       },$css);
       $css = implode("\n",$css);
       return $css;
