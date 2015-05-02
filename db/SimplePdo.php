@@ -5,8 +5,8 @@ class SimplePdo {
 
     public $connect;
     
-    public function __construct($host,$port,$user,$pass,$base){
-        $this->connect = new \PDO('pgsql:dbname='.$base.';host='.$host.';port='.$port.';',$user,$pass);
+    public function __construct($dsn,$pass=null,$base=null){
+        $this->connect = new \PDO($dsn,$user,$pass);
         $this->connect->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
     }
 
