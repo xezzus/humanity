@@ -5,12 +5,12 @@ class SimplePdo {
 
     public $connect;
     
-    public function __construct($dsn,$pass=null,$base=null){
+    public function __construct($dsn,$user=null,$pass=null){
         $this->connect = new \PDO($dsn,$user,$pass);
         $this->connect->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
     }
 
-    public function select($query,$params){
+    public function select($query,$params=null){
         $query = $this->connect->prepare($query);
         $query->execute($params);
         return $query;
