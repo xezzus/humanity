@@ -18,7 +18,7 @@ class Application {
   }
 
   public function __call($name,$value){
-    $file = __DIR__.'/../../../apps/'.$this->name.'/'.$name.'.php'; $this->name = null;
+    $file = $this->config['paths']['apps'].'/'.$this->name.'/'.$name.'.php'; $this->name = null;
     if(is_file($file)) {
       $result = require($file);
       if(is_callable($result)) $result = call_user_func_array($result,$value);

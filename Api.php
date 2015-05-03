@@ -4,8 +4,12 @@ namespace humanity;
 class Api {
 
     private $db;
-
     private static $instance;
+    private $config;
+
+    public function __construct(){
+        $this->config = (new Config)->instance()->config;
+    }
 
     public function instance(){
         if(!self::$instance){
@@ -16,7 +20,11 @@ class Api {
 
     public function db(){
         if(!isset($this->instance()->db)){
-            $this->instance()->db = new db\SimplePdo('sqlite:'.__DIR__.'/api.sq3');
+            $this->instance()->db = new db\SimplePdo('sqlite:'.$this->config['api']['file']);
+            if(filesize($this->config['api']['file']) == 0){
+                $dump = file_get_contents(__DIR__.'/api.sql');
+                $this->instance()->db->connect->exec($dump);
+            }
         }
         return $this->instance()->db;
     }

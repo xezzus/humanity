@@ -1,7 +1,7 @@
 <?php
 namespace humanity;
 
-class RestApi extends Application {
+class RestApi extends Api {
 
     public $post = [];
 
