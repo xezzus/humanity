@@ -1,0 +1,24 @@
+#!/usr/bin/php
+
+<?php
+require_once(__DIR__.'/vendor/autoload.php');
+$config = require_once(__DIR__.'/config/main.php');
+(new humanity\Console($config));
+
+$api = new humanity\Api;
+
+$cmd = $argv[1];
+
+switch($cmd){
+    case "add":
+        echo (($api->AddMethod($argv[2])) ? 'Done' : 'Exist')."\n";
+    break;
+    case "list":
+        $list = $api->ListMethod();
+        foreach($list as $name=>$status){
+            echo "\t$name $status\n";
+        }
+    break;
+}
+
+?>
