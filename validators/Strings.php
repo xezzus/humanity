@@ -30,8 +30,13 @@ class Strings {
     }
 
     public function phone(){
-        if(preg_match('/\+[\d]{2,20}/')) return true;
-        else false;
+        if(preg_match('/\+[\d]{2,20}/',$this->string)) return true;
+        else return false;
+    }
+
+    public function email(){
+        if(filter_var($this->string,FILTER_VALIDATE_EMAIL)) return true;
+        else return false;
     }
 
 }
