@@ -19,8 +19,8 @@ class Strings {
     }
 
     public function name(){
-        if(preg_match('/[^A-zА-я]{1,100}/',$this->string)) return false;
-        else return true;
+        if(preg_match('/^[\S]{1,30}$/',$this->string)) return true;
+        else return false;
     }
 
     public function password(){
@@ -30,7 +30,7 @@ class Strings {
     }
 
     public function phone(){
-        if(preg_match('/\+[\d]{2,20}/',$this->string)) return true;
+        if(preg_match('/^\+[\d]{2,20}$/',$this->string)) return true;
         else return false;
     }
 
