@@ -29,5 +29,10 @@ class Strings {
         else return true;
     }
 
+    public function phone(){
+        if(preg_match('/\+[\d]{2,20}/')) return true;
+        else false;
+    }
+
 }
 ?>
