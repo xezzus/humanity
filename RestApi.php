@@ -12,7 +12,8 @@ class RestApi extends Application {
         $status = (new Api)->findStatusMethod($this->post['method']);
         if($status != 'PUBLIC') die('{}');
         $method = explode('.',$this->post['method']);
-        $params = $this->post['params'];
+        if(isset($this->post['params']) && is_array($this->post['params'])) $params = $this->post['params'];
+        else $params = [];
         $func = call_user_func_array([$this->{$method[0]},$method[1]],$params);
         if(!$func) die('{}');
         $func = json_encode($func);
