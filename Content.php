@@ -8,24 +8,25 @@ class Content {
   private $path;
   private $content;
 
-  public function __construct($path,$config=[]){
-    # Path
+  public function __construct($path){
+    # Type
     $this->path = $path;
+    # Config
+    $this->config = (new Config)->instance()->config;
     # Application
     $this->app = new Application;
     # View
     $this->view = new View;
+    # Widget
+    $this->widget = new Widget;
     # Js
     $this->js = (new Js)->instance();
     # Css
     $this->css = (new Css)->instance();
   }
 
-  public function __destruct(){
-  }
-
   public function load(){
-    $path = $this->path.'/';
+    $path = $this->path;
     # Route
     $uri = explode('/',$_SERVER['REQUEST_URI']);
     foreach($uri as $key=>$value){ if(empty(trim($value))) { unset($uri[$key]); continue; } }
@@ -44,7 +45,7 @@ class Content {
       if($filePhtml) { $currentUri = $nextUri; break; }
     }
     if($filePhtml === null) {
-      $filePhtml = $path.'index.phtml';
+      $filePhtml = $path.'/index.phtml';
     }
     ob_start();
     require($filePhtml);

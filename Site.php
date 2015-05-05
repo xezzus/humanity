@@ -3,11 +3,9 @@ namespace humanity;
 
 class Site {
 
-  public function __construct($config=[]){
-    # Load config
-    (new Config)->instance()->load($config);
+  public function __construct(){
     # Load page
-    $content = new Content($config['paths']['page']);
+    $content = new Content((new Config)->instance()->config['paths']['page']);
     $content->load();
     $css = $content->getCss();
     $js = $content->getJs();
