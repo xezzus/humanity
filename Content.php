@@ -37,7 +37,7 @@ class Content {
     for($i=count($uri)-1; $i>=0; $i--){
       $nextUri = implode('/',array_slice($uri,0,$i+1));
       $getFile = function($type) use($path,$nextUri){
-        $file = $path.$nextUri.'/index.'.$type;
+        $file = $path.'/'.$nextUri.'/index.'.$type;
         if(is_file($file)) return $file;
         return null;
       };
