@@ -13,13 +13,8 @@ class Strings {
         return false;
     }
 
-    public function verify($type){
-        return call_user_func([$this,$type]);
-        return false;
-    }
-
     public function name(){
-        if(preg_match('/^[\S]{1,30}$/',$this->string)) return true;
+        if(preg_match('/^\S{1,15}$/',$this->string)) return true;
         else return false;
     }
 
@@ -30,12 +25,22 @@ class Strings {
     }
 
     public function phone(){
-        if(preg_match('/^\+[\d]{2,20}$/',$this->string)) return true;
+        if(preg_match('/^\+\d{2,20}$/',$this->string)) return true;
         else return false;
     }
 
     public function email(){
         if(filter_var($this->string,FILTER_VALIDATE_EMAIL)) return true;
+        else return false;
+    }
+
+    public function date(){
+        if(preg_match('/^\d{2}\.\d{2}\.\d{4}$/',$this->string)) return true;
+        else return false;
+    }
+
+    public function smallString(){
+        if(preg_match('/^\S{1,15}$/',$this->string)) return true;
         else return false;
     }
 

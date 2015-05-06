@@ -3,27 +3,32 @@ namespace humanity;
 
 class Content {
 
-  public $js;
-  public $css = [];
-  private $path;
-  private $content;
+    public $host;
+    public $js;
+    public $css = [];
+    private $path;
+    private $content;
 
-  public function __construct($path){
-    # Type
-    $this->path = $path;
-    # Config
-    $this->config = (new Config)->instance()->config;
-    # Application
-    $this->app = new Application;
-    # View
-    $this->view = new View;
-    # Widget
-    $this->widget = new Widget;
-    # Js
-    $this->js = (new Js)->instance();
-    # Css
-    $this->css = (new Css)->instance();
-  }
+    public function __construct($path){
+        # Host
+        $this->host = parse_url('http://'.$_SERVER['HTTP_HOST']);
+        if(isset($this->host['host'])) $this->host = $this->host['host'];
+        else $this->host = '/';
+        # Type
+        $this->path = $path;
+        # Config
+        $this->config = (new Config)->instance()->config;
+        # Application
+        $this->app = new Application;
+        # View
+        $this->view = new View;
+        # Widget
+        $this->widget = new Widget;
+        # Js
+        $this->js = (new Js)->instance();
+        # Css
+        $this->css = (new Css)->instance();
+    }
 
   public function load(){
     $path = $this->path;
@@ -62,7 +67,7 @@ class Content {
       $js = $this->js->getList();
       $js = array_unique($js);
       $js = array_map(function($js){
-          return '<script src="'.$js.'"></script>';
+          return '<script src="//'.$this->host.'/'.$js.'"></script>';
       },$js);
       $js = implode("\n",$js);
       return $js;
@@ -72,7 +77,7 @@ class Content {
       $css = $this->css->getList();
       $css = array_unique($css);
       $css = array_map(function($css){
-          return '<link rel="stylesheet" href="'.$css.'">';
+          return '<link rel="stylesheet" href="//'.$this->host.'/'.$css.'">';
       },$css);
       $css = implode("\n",$css);
       return $css;
