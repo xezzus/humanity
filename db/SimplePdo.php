@@ -16,13 +16,18 @@ class SimplePdo {
         return $query;
     }
 
-    public function insert($table,$params){
+    public function insert($table,$params,$returning=null){
         $fields = implode(',',array_keys($params));
         $prepare = implode(',',array_map(function($field){ return '?'; },$params));
         $values = array_values($params);
-        $query = "insert into \"$table\" ($fields) values ($prepare)";
+        if(!empty($returning)){
+            if(is_array($returning)) $returning = implode(',',$returning);
+            $returning = ' returning '.$returning;
+        }
+        $query = "insert into \"$table\" ($fields) values ($prepare)$returning";
         $query = $this->connect->prepare($query);
-        return $query->execute($values);
+        if($query->execute($values) === true) return $query;
+        else return false;
     }
 
     public function error(){
