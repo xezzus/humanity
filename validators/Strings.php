@@ -14,7 +14,7 @@ class Strings {
     }
 
     public function name(){
-        if(preg_match('/^\S{1,15}$/',$this->string)) return true;
+        if(preg_match('/^\w{1,15}$/u',$this->string)) return true;
         else return false;
     }
 
@@ -40,7 +40,7 @@ class Strings {
     }
 
     public function smallString(){
-        if(preg_match('/^\S{1,15}$/',$this->string)) return true;
+        if(preg_match('/^\S{1,15}$/u',$this->string)) return true;
         else return false;
     }
 
