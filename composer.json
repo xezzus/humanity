@@ -2,8 +2,10 @@
     "name": "humanity/humanity",
     "description": "Humanity PHP Framework Version 1",
     "keywords": [
+        "PHP",
         "humanity",
-        "framework"
+        "framework",
+        "VA"
     ],
     "homepage": "https://github.com/xezzus/humanity",
     "type": "library",
