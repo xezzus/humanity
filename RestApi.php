@@ -19,10 +19,10 @@ class RestApi extends Application {
 
         # Filter params
         $method['params'] = json_decode($method['params']);
+        $validator = [];
+        $required = [];
+        $params = [];
         if(!empty($method['params']) && is_object($method['params'])){
-            $validator = [];
-            $required = [];
-            $params = [];
             foreach($method['params'] as $name => $value){
                 if(!isset($this->post['params'][$name])) { $params[$name] = null; }
                 else $params[$name] = trim(Html::encode($this->post['params'][$name]));
