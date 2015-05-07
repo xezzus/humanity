@@ -42,6 +42,12 @@ class Api {
         return array_column($find,'status','name');
     }
 
+    public function findMethod($name){
+        $query = "select status,params from method where name = ? limit 1";
+        $find = $this->db()->select($query,[$name])->fetch();
+        if($find) return $find;
+    }
+
     public function findStatusMethod($name){
         $query = "select status from method where name = ? limit 1";
         $find = $this->db()->select($query,[$name])->fetch();

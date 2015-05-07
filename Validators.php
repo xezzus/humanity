@@ -1,7 +1,7 @@
 <?php
-namespace humanity\validators;
+namespace humanity;
 
-class Strings {
+class Validators {
 
     public $string;
 
@@ -11,6 +11,16 @@ class Strings {
 
     public function __call($name,$value){
         return false;
+    }
+
+    public function integer(){
+        if(preg_match('/^\d{1,15}$/',$this->string)) return true;
+        else return false;
+    }
+
+    public function string(){
+        if(preg_match('/^[\S ]{1,254}$/u',$this->string)) return true;
+        else return false;
     }
 
     public function name(){
@@ -39,8 +49,18 @@ class Strings {
         else return false;
     }
 
-    public function smallString(){
-        if(preg_match('/^\S{1,15}$/u',$this->string)) return true;
+    public function stringMedium(){
+        if(preg_match('/^[\S ]{1,127}$/u',$this->string)) return true;
+        else return false;
+    }
+
+    public function stringSmall(){
+        if(preg_match('/^[\S ]{1,63}$/u',$this->string)) return true;
+        else return false;
+    }
+
+    public function stringTiny(){
+        if(preg_match('/^[\S ]{1,31}$/u',$this->string)) return true;
         else return false;
     }
 

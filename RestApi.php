@@ -6,16 +6,41 @@ class RestApi extends Application {
     public $post = [];
 
     public function __construct(){
+        # Header
         header('Content-Type: application/json');
+
+        # Get post
         $this->post = $_POST;
-        if(!preg_match('/^[a-z]{1,15}\.[a-z]{1,15}$/',$this->post['method'])) die('{}');
-        $status = (new Api)->findStatusMethod($this->post['method']);
-        if($status != 'PUBLIC') die('{}');
-        $method = explode('.',$this->post['method']);
-        if(isset($this->post['params']) && is_array($this->post['params'])) $params = $this->post['params'];
-        else $params = [];
-        $func = call_user_func_array([$this->{$method[0]},$method[1]],$params);
-        if(!$func) die('{}');
+        if(!preg_match('/^[A-z]{1,15}\.[A-z]{1,15}$/',$this->post['method'])) die('{}');
+
+        # Find method
+        $method = (new Api)->findMethod($this->post['method']);
+        if($method['status'] != 'PUBLIC') die('{"msg"=>"Failed"}');
+
+        # Filter params
+        $method['params'] = json_decode($method['params']);
+        if(!empty($method['params']) && is_object($method['params'])){
+            $validator = [];
+            $required = [];
+            $params = [];
+            foreach($method['params'] as $name => $value){
+                if(!isset($this->post['params'][$name])) { $params[$name] = null; }
+                else $params[$name] = trim(Html::encode($this->post['params'][$name]));
+                if($value->require == true && empty($params[$name])) $required[] = $name;
+                if((new Validators($params[$name]))->{$value->validator}() === false) $validator[] = $name;
+            }
+        }
+
+        # Required
+        if(!empty($required)) die(json_encode(['msg'=>'Failed','required'=>$required]));
+
+        # Validator
+        if(!empty($validator)) die(json_encode(['msg'=>'Failed','validator'=>$validator]));
+
+        # Call method
+        $call = explode('.',$this->post['method']);
+        $func = call_user_func_array([$this->{$call[0]},$call[1]],$params);
+        if(!$func) die('{"msg":"Failed"}');
         $func = json_encode($func);
         die($func);
     }
