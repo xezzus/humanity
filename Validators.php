@@ -64,5 +64,11 @@ class Validators {
         else return false;
     }
 
+    public function emailorphone(){
+        if($this->email() == true) return true;
+        else if($this->phone() == true) return true;
+        else return false;
+    }
+
 }
 ?>
