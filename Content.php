@@ -67,7 +67,7 @@ class Content {
       $js = $this->js->getList();
       $js = array_unique($js);
       $js = array_map(function($js){
-          return '<script src="//'.$this->host.'/'.$js.'"></script>';
+          return '<script src="/'.$js.'"></script>';
       },$js);
       $js = implode("\n",$js);
       return $js;
@@ -77,7 +77,7 @@ class Content {
       $css = $this->css->getList();
       $css = array_unique($css);
       $css = array_map(function($css){
-          return '<link rel="stylesheet" href="//'.$this->host.'/'.$css.'">';
+          return '<link rel="stylesheet" href="/'.$css.'">';
       },$css);
       $css = implode("\n",$css);
       return $css;
