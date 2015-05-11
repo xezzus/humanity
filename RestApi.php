@@ -15,7 +15,7 @@ class RestApi extends Application {
 
         # Find method
         $method = (new Api)->findMethod($this->post['method']);
-        if($method['status'] != 'PUBLIC') die('{"msg":"Failed"}');
+        if($method['status'] != 'PUBLIC') die('{"msg"=>"Failed"}');
 
         # Filter params
         $method['params'] = json_decode($method['params']);
@@ -26,7 +26,7 @@ class RestApi extends Application {
             foreach($method['params'] as $name => $value){
                 if(!isset($this->post['params'][$name])) { $params[$name] = null; }
                 else $params[$name] = trim(Html::encode($this->post['params'][$name]));
-                if($value->require == true && empty($params[$name])) $required[] = $name;
+                if($value->require == 'true' && empty($params[$name])) $required[] = $name;
                 if((new Validators($params[$name]))->{$value->validator}() === false) $validator[] = $name;
             }
         }
