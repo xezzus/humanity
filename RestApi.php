@@ -27,7 +27,8 @@ class RestApi extends Application {
                 if(!isset($this->post['params'][$name])) { $params[$name] = null; }
                 else $params[$name] = trim(Html::encode($this->post['params'][$name]));
                 if($value->require == 'true' && empty($params[$name])) $required[] = $name;
-                if((new Validators($params[$name]))->{$value->validator}() === false) $validator[] = $name;
+                else if(empty($params[$name])) $params[$name] = null;
+                if(!is_null($params[$name])) if((new Validators($params[$name]))->{$value->validator}() === false) $validator[] = $name;
             }
         }
 
