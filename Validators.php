@@ -45,7 +45,7 @@ class Validators {
     }
 
     public function date(){
-        if(preg_match('/^\d{2}\.\d{2}\.\d{4}$/',$this->string)) return true;
+        if(preg_match('/^(\d{2}\.\d{2}\.\d{4}|\d{4}-\d{2}-\d{2})$/',$this->string)) return true;
         else return false;
     }
 

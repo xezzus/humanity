@@ -40,6 +40,8 @@ class RestApi extends Application {
 
         # Call method
         $call = explode('.',$this->post['method']);
+        ksort($params,SORT_STRING);
+        reset($params);
         $func = call_user_func_array([$this->{$call[0]},$call[1]],$params);
         if(!$func) die('{"msg":"Failed"}');
         $func = json_encode($func);
