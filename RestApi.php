@@ -15,7 +15,7 @@ class RestApi extends Application {
 
         # Find method
         $method = (new Api)->findMethod($this->post['method']);
-        if($method['status'] != 'PUBLIC') die('{"msg"=>"Failed"}');
+        if($method['status'] != 'PUBLIC') die('{"msg":"Failed"}');
 
         # Filter params
         $method['params'] = json_decode($method['params']);
