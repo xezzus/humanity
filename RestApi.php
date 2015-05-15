@@ -24,11 +24,15 @@ class RestApi extends Application {
         $params = [];
         if(!empty($method['params']) && is_object($method['params'])){
             foreach($method['params'] as $name => $value){
-                if(!isset($this->post['params'][$name])) { $params[$name] = null; }
-                else $params[$name] = trim(Html::encode($this->post['params'][$name]));
-                if($value->require == 'true' && empty($params[$name])) $required[] = $name;
-                else if(empty($params[$name])) $params[$name] = null;
-                if(!is_null($params[$name])) if((new Validators($params[$name]))->{$value->validator}() === false) $validator[] = $name;
+                if(!isset($this->post['params'][$name]) || empty(trim($this->post['params'][$name]))) { $params[$name] = null; }
+                if($value->require == 'true' && is_null($params[$name])) $required[] = $name;
+                if(!is_null($params[$name])) {
+                    if((new Validators($params[$name]))->{$value->validator}() === false) {
+                        $validator[] = $name;
+                    } else {
+                        $params[$name] = Html::encode(trim($params[$name]));
+                    }
+                }
             }
         }
 
