@@ -25,6 +25,7 @@ class RestApi extends Application {
         if(!empty($method['params']) && is_object($method['params'])){
             foreach($method['params'] as $name => $value){
                 if(!isset($this->post['params'][$name]) || empty(trim($this->post['params'][$name]))) { $params[$name] = null; }
+                else $params[$name] = $this->post['params'][$name];
                 if($value->require == 'true' && is_null($params[$name])) $required[] = $name;
                 if(!is_null($params[$name])) {
                     if((new Validators($params[$name]))->{$value->validator}() === false) {
