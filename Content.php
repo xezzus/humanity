@@ -33,7 +33,11 @@ class Content {
   public function load(){
     $path = $this->path;
     # Route
-    $uri = explode('/',$_SERVER['REQUEST_URI']);
+    $uri = $_SERVER['REQUEST_URI'];
+    $uri = urldecode($uri);
+    $uri = strtolower($uri);
+    $uri = preg_replace("/[^a-z\d_\-\/]/",'',$uri);
+    $uri = explode('/',$uri);
     foreach($uri as $key=>$value){ if(empty(trim($value))) { unset($uri[$key]); continue; } }
     $uri = array_values($uri);
     $isFile = null;
