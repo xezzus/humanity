@@ -18,6 +18,11 @@ class Validators {
         else return false;
     }
 
+    public function text(){
+        if(preg_match('/^[\S\s]{1,10000}$/u',$this->string)) return true;
+        else return false;
+    }
+
     public function string(){
         if(preg_match('/^[\S ]{1,254}$/u',$this->string)) return true;
         else return false;
@@ -67,6 +72,11 @@ class Validators {
     public function emailorphone(){
         if($this->email() == true) return true;
         else if($this->phone() == true) return true;
+        else return false;
+    }
+
+    public function boolean(){
+        if(preg_match('/^(1|0|t|f|true|false|on|off)$/',$this->string)) return true;
         else return false;
     }
 
