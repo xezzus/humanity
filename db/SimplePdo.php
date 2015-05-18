@@ -20,6 +20,10 @@ class SimplePdo {
         $fields = implode(',',array_keys($params));
         $prepare = implode(',',array_map(function($field){ return '?'; },$params));
         $values = array_values($params);
+        $values = array_map(function($value){
+            if(is_array($value)) return json_encode($value);
+            else return $value;
+        },$values);
         if(!empty($returning)){
             if(is_array($returning)) $returning = implode(',',$returning);
             $returning = ' returning '.$returning;
