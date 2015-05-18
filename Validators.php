@@ -40,7 +40,7 @@ class Validators {
     }
 
     public function email($string){
-        if(filter_var($this->string,FILTER_VALIDATE_EMAIL)) return true;
+        if(filter_var($string,FILTER_VALIDATE_EMAIL)) return true;
         else return false;
     }
 
@@ -65,8 +65,8 @@ class Validators {
     }
 
     public function emailorphone($string){
-        if($this->email() == true) return true;
-        else if($this->phone() == true) return true;
+        if($this->email($string) == true) return true;
+        else if($this->phone($string) == true) return true;
         else return false;
     }
 
