@@ -8,7 +8,6 @@ class RestApi extends Application {
     public function __construct(){
         # Header
         header('Content-Type: application/json');
-
         # Get post
         $this->post = $_POST;
         if(!preg_match('/^[A-z]{1,15}\.[A-z]{1,15}$/',$this->post['method'])) die('{}');
@@ -24,14 +23,23 @@ class RestApi extends Application {
         $params = [];
         if(!empty($method['params']) && is_object($method['params'])){
             foreach($method['params'] as $name => $value){
-                if(!isset($this->post['params'][$name]) || empty(trim($this->post['params'][$name]))) { $params[$name] = null; }
-                else $params[$name] = $this->post['params'][$name];
+                if(isset($this->post['params'][$name])){
+                    $params[$name] = $this->post['params'][$name];
+                    if(is_string($params[$name])) $params[$name] = trim($params[$name]);
+                } 
+                if(!isset($params[$name]) || empty($params[$name])) $params[$name] = null;
                 if($value->require == 'true' && is_null($params[$name])) $required[] = $name;
                 if(!is_null($params[$name])) {
-                    if((new Validators($params[$name]))->{$value->validator}() === false) {
+                    if((new Verify($params[$name]))->{$value->validator} === false) {
                         $validator[] = $name;
                     } else {
-                        $params[$name] = Html::encode(trim($params[$name]));
+                        if(is_array($params[$name])){
+                            $params[$name] = array_map(function($value){
+                                return Html::encode(trim($value));
+                            },$params[$name]);
+                        } else {
+                            $params[$name] = Html::encode($params[$name]);
+                        }
                     }
                 }
             }
