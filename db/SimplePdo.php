@@ -21,7 +21,7 @@ class SimplePdo {
         $prepare = implode(',',array_map(function($field){ return '?'; },$params));
         $values = array_values($params);
         $values = array_map(function($value){
-            if(is_array($value)) return json_encode($value);
+            if(is_array($value)) return '{"'.implode('","',$value).'"}';
             else return $value;
         },$values);
         if(!empty($returning)){
