@@ -14,7 +14,7 @@ class RestApi extends Application {
 
         # Find method
         $method = (new Api)->findMethod($this->post['method']);
-        if($method['status'] != 'PUBLIC') die('{"msg":"Failed"}');
+        if($method['status'] != 'PUBLIC') die('{"msg":"Failed","info":"This method deny"}');
 
         # Filter params
         $method['params'] = json_decode($method['params']);
@@ -56,7 +56,7 @@ class RestApi extends Application {
         ksort($params,SORT_STRING);
         reset($params);
         $func = call_user_func_array([$this->{$call[0]},$call[1]],$params);
-        if(!$func) die('{"msg":"Failed"}');
+        if(!$func) die('{"msg":"Failed","info":"No function"}');
         $func = json_encode($func);
         die($func);
     }
