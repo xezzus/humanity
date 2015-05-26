@@ -9,7 +9,7 @@ class Validators {
     }
 
     public function integer($string){
-        if(preg_match('/^\d{1,15}$/',$string)) return true;
+        if(preg_match('/^[\-\+\d]{1,15}$/',$string)) return true;
         else return false;
     }
 
