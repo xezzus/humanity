@@ -19,6 +19,7 @@ class Api {
     }
 
     public function db(){
+        if(!isset($this->config['api']['file'])) die('No API file');
         if(!isset($this->instance()->db)){
             $this->instance()->db = new db\SimplePdo('sqlite:'.$this->config['api']['file']);
             if(filesize($this->config['api']['file']) == 0){
