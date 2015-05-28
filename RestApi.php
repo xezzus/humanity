@@ -10,6 +10,9 @@ class RestApi extends Application {
         header('Content-Type: application/json');
         # Get post
         $this->post = (strstr($_SERVER['CONTENT_TYPE'],'application/json')) ? json_decode(file_get_contents('php://input'),1) : $_POST;
+        # Check
+        if(!isset($this->post['method'])) die('{}');
+        # Filter
         if(!preg_match('/^[A-z]{1,15}\.[A-z]{1,15}$/',$this->post['method'])) die('{}');
 
         # Find method
