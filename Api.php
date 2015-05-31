@@ -37,6 +37,13 @@ class Api {
         else return true;
     }
 
+    public function isPermission($appId,$method){
+        $select = "select 1 from permission where app_id = ? and method = ? limit 1";
+        $find = $this->db()->select($select,[$appId,$method])->fetch();
+        if($find === false) return false;
+        else return true;
+    }
+
     public function AddMethod($name,$status=null){
         $insert['name'] = $name;
         if($status) $insert['status'] = $status;

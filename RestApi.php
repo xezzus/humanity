@@ -14,6 +14,10 @@ class RestApi extends Application {
         if(!isset($this->post['method'])) die('{}');
         # Filter
         if(!preg_match('/^[A-z]{1,15}\.[A-z]{1,15}$/',$this->post['method'])) die('{}');
+        # Hack
+        $this->post['method'] = Html::encode(trim($this->post['method']));
+        if(isset($this->post['app_id'])) $this->post['app_id'] = (int) trim($this->post['app_id']);
+        if(isset($this->post['sig'])) $this->post['sig'] = Html::encode(trim($this->post['sig']));
 
         $apiDb = new Api;
         # Find method
@@ -21,7 +25,11 @@ class RestApi extends Application {
         if($method['status'] == 'PRIVATE'){
             $auth = false;
             if(isset($this->post['app_id']) && isset($this->post['sig'])){
-                $auth = $apiDb->authApp((int) $this->post['app_id'],Html::encode(trim($this->post['sig'])));
+                $auth = $apiDb->authApp((int) $this->post['app_id'],$this->post['sig']);
+                if($auth === true){
+                    $permission = $apiDb->isPermission($this->post['app_id'],$this->post['method']);
+                    if($permission === false) $auth = false;
+                }
             }
             if($auth === false) die('{"msg":"Failed","info":"No authentication"}');
         } else {
