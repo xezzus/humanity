@@ -15,9 +15,18 @@ class RestApi extends Application {
         # Filter
         if(!preg_match('/^[A-z]{1,15}\.[A-z]{1,15}$/',$this->post['method'])) die('{}');
 
+        $apiDb = new Api;
         # Find method
-        $method = (new Api)->findMethod($this->post['method']);
-        if($method['status'] != 'PUBLIC') die('{"msg":"Failed","info":"This method deny"}');
+        $method = $apiDb->findMethod($this->post['method']);
+        if($method['status'] == 'PRIVATE'){
+            $auth = false;
+            if(isset($this->post['app_id']) && isset($this->post['sig'])){
+                $auth = $apiDb->authApp((int) $this->post['app_id'],Html::encode(trim($this->post['sig'])));
+            }
+            if($auth === false) die('{"msg":"Failed","info":"No authentication"}');
+        } else {
+            if($method['status'] != 'PUBLIC') die('{"msg":"Failed","info":"This method deny"}');
+        }
 
         # Filter params
         $method['params'] = json_decode($method['params']);

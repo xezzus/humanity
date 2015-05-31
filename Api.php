@@ -30,6 +30,13 @@ class Api {
         return $this->instance()->db;
     }
 
+    public function authApp($appId,$sig){
+        $select = "select 1 from app where id = ? and sig = ? limit 1";
+        $find = $this->db()->select($select,[$appId,$sig])->fetch();
+        if($find === false) return false;
+        else return true;
+    }
+
     public function AddMethod($name,$status=null){
         $insert['name'] = $name;
         if($status) $insert['status'] = $status;
