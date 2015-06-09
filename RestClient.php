@@ -9,6 +9,7 @@ class RestClient {
 
     public function url($url){
         $this->url = $url;
+        return $this;
     }
 
     public function headers($array){
@@ -29,7 +30,7 @@ class RestClient {
 
     public function post($params){
         if(!is_array($params)) return false;
-        $curl = curl_init();
+        $curl = curl_init($this->url);
         curl_setopt_array($curl,[
             CURLOPT_HTTPHEADER=>$this->headers,
             CURLOPT_AUTOREFERER=>true,
@@ -38,7 +39,6 @@ class RestClient {
             CURLOPT_COOKIE=>$this->cookie,
             CURLOPT_COOKIEJAR=>'cookie.txt',
             CURLOPT_COOKIEFILE=>'cookie.txt',
-            CURLOPT_URL=>$this->url,
             CURLOPT_HEADER=>false,
             CURLOPT_RETURNTRANSFER=>true,
             CURLOPT_POST=>true,
@@ -55,7 +55,13 @@ class RestClient {
 
     public function get($params=[]){
         if(!is_array($params)) return false;
-        $curl = curl_init($this->url);
+        $url = parse_url($this->url);
+        if(!empty($params)){
+            if(isset($url['query'])) $url['query'] = $url['query'].'&'.http_build_query($params);
+            else $url['query'] = http_build_query($params); 
+        }
+        $url = 'http://'.((isset($url['host'])) ? $url['host'] : '').((isset($url['path'])) ? $url['path'] : '').((isset($url['query'])) ? '?'.$url['query'] : '');
+        $curl = curl_init($url);
         curl_setopt_array($curl,[
             CURLOPT_HTTPHEADER=>$this->headers,
             CURLOPT_HEADER=>false,
