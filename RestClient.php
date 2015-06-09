@@ -7,7 +7,7 @@ class RestClient {
     public $headers = [];
     public $cookie;
 
-    public function __construct($url){
+    public function url($url){
         $this->url = $url;
     }
 
