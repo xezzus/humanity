@@ -76,8 +76,8 @@ class RestApi extends Application {
         ksort($params,SORT_STRING);
         reset($params);
         $func = call_user_func_array([$this->{$call[0]},$call[1]],$params);
-        if(!$func) die('{"msg":"Failed","info":"No function"}');
-        $func = json_encode($func);
+        if(is_array($func)) $func = json_encode($func);
+        else $func = '{}';
         die($func);
     }
 
