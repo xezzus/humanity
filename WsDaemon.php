@@ -1,10 +1,40 @@
 <?php 
 $socket  = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-socket_bind($socket,'127.0.0.1','8888');
 socket_set_option($socket, SOL_SOCKET, SO_REUSEADDR, 1);
+socket_bind($socket,'127.0.0.1','8888');
 socket_set_nonblock($socket);
 socket_listen($socket);
+
+$clients = [$socket];
+$null = null;
+
+while(true){
+    $read = $clients;
+    if (socket_select($read, $write = NULL, $except = NULL, 0) < 1) continue;
+    if(in_array($socket,$read)){
+        $key = array_search($socket, $read);
+        unset($read[$key]);
+    }
+}
+
+/*
+$read = [$socket];
+$write = null;
+$execept = null;
+while($select = socket_select($read,$write,$execept,0)){
+    socket_listen($read[0]);
+    var_dump($read);
+    sleep(1);
+}
+
+/*
 $client = [];
+$read = [$socket];
+$write = null;
+$execept = null;
+$select = socket_select([$socket],$write,$execept,0);
+var_dump($select);
+/*
 while(true){
     $accept = socket_accept($socket);
     if($accept !== false) $client[] = $accept;

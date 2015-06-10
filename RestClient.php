@@ -13,6 +13,7 @@ class RestClient {
     }
 
     public function headers($array){
+        $this->headers = [];
         foreach($array as $key=>$value){ $this->headers[] = $key.': '.$value; }
         return $this;
     }
