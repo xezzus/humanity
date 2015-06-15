@@ -2,7 +2,7 @@
 
 ## Application
 
-```
+```php
 $this->app-nameMethod();
 or
 $this->app->namespace->nameMethod()
@@ -24,19 +24,13 @@ return function(){
 
 ## Singleton
 
-```
+```php
 return function(){
     if(!isset($this->singleton->namesingle)){
         $this->singleton->namesingle = microtime(1)
     }
     return $this->singleton->namesingle
 }
-```
-
-## Validating
-
-```
-...
 ```
 
 ## WsDaemon
