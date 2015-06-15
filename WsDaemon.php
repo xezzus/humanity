@@ -214,7 +214,9 @@ class WsDaemon {
                     continue;
                 }
 
-                if(!empty($data)){
+                var_dump($data['type']);
+
+                if($data['type'] == 'text'){
                     $clientId = array_search($client,$this->clients);
                     $response = $func($data['payload'],$clientId);
                     if(!is_array($response['clients'])) $response['clients'] = [$response['clients']];
