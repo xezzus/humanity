@@ -208,7 +208,7 @@ class WsDaemon {
             foreach($read as $client){
                 $data = @socket_read($client, 12000);
                 $data = $this->decode($data);
-                if($data === false){
+                if($data['type'] == 'close'){
                     unset($this->clients[array_search($client, $this->clients)]);
                     echo "Клиент отключился.\n";
                     continue;
