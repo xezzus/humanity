@@ -9,6 +9,8 @@ class Widget {
     public function __construct(){
         # Application
         $this->app = new Application;
+        # View
+        $this->view = new View;
         # Js
         $this->js = (new Js)->instance();
         # Css
