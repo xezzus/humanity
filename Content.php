@@ -28,6 +28,8 @@ class Content {
         $this->js = (new Js)->instance();
         # Css
         $this->css = (new Css)->instance();
+        # Routing
+        $this->routing = new Routing;
     }
 
   public function load(){
