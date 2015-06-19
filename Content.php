@@ -8,6 +8,7 @@ class Content {
     public $css = [];
     private $path;
     private $content;
+    private static $cask;
 
     public function __construct($path){
         # Host
@@ -30,6 +31,8 @@ class Content {
         $this->css = (new Css)->instance();
         # Routing
         $this->routing = new Routing;
+        # Cask
+        self::$cask = (new Cask)->instance();
     }
 
   public function load(){

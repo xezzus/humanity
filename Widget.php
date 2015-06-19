@@ -6,6 +6,7 @@ class Widget {
     public $config;
     private static $property;
     public static $routing;
+    public static $cask;
 
     public function __construct(){
         # Application
@@ -18,6 +19,8 @@ class Widget {
         $this->css = (new Css)->instance();
         # Routing
         self::$routing = new Routing;
+        # Cask
+        self::$cask = (new Cask)->instance();
     }
 
     public function __get($name){
