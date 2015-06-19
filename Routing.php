@@ -19,9 +19,12 @@ class Routing {
         return $uri;
     }
 
-    public function isUri($uri,$func){
+    public function isUri($uri,$func=null){
         $uri = $this->explodeUri($uri);
-        if($this->uri == $uri) $func();
+        if($this->uri == $uri) {
+            if(is_callable($func)) $func();
+            else if(is_string($func)) echo $func;
+        }
         return $this;
     }
 
