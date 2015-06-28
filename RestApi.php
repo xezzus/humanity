@@ -13,7 +13,7 @@ class RestApi extends Application {
         # Check
         if(!isset($this->post['method'])) die('{}');
         # Filter
-        if(!preg_match('/^[A-z]{1,15}\.[A-z]{1,15}$/',$this->post['method'])) die('{}');
+        if(!preg_match('/^[A-z\d]{1,15}\.[A-z\d]{1,15}$/',$this->post['method'])) die('{}');
         # Hack
         $this->post['method'] = Html::encode(trim($this->post['method']));
         if(isset($this->post['app_id'])) $this->post['app_id'] = (int) trim($this->post['app_id']);
