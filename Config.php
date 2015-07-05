@@ -9,7 +9,12 @@ class Config {
             'page'=>__DIR__.'/../../../web/page',
             'view'=>__DIR__.'/../../../web/view',
             'widget'=>__DIR__.'/../../../web/widget',
-            'apps'=>__DIR__.'/../../../apps'
+            'apps'=>__DIR__.'/../../../apps',
+            'js'=>__DIR__.'/../../../web/js',
+            'css'=>__DIR__.'/../../../web/css'
+        ],
+        'api'=>[
+            'file'=>__DIR__.'/../../../api.db'
         ]
     ];
 

@@ -5,10 +5,10 @@ class Api {
 
     private $db;
     private static $instance;
-    private $config;
+    private static $config;
 
     public function __construct(){
-        $this->config = (new Config)->instance()->config;
+        self::$config = (new Config)->instance()->config;
     }
 
     public function instance(){
@@ -19,10 +19,10 @@ class Api {
     }
 
     public function db(){
-        if(!isset($this->config['api']['file'])) die('No API file');
+        if(!isset(self::$config['api']['file'])) die('No API file');
         if(!isset($this->instance()->db)){
-            $this->instance()->db = new db\SimplePdo('sqlite:'.$this->config['api']['file']);
-            if(filesize($this->config['api']['file']) == 0){
+            $this->instance()->db = new db\SimplePdo('sqlite:'.self::$config['api']['file']);
+            if(filesize(self::$config['api']['file']) == 0){
                 $dump = file_get_contents(__DIR__.'/api.sql');
                 $this->instance()->db->connect->exec($dump);
             }

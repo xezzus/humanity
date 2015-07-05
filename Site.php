@@ -3,18 +3,21 @@ namespace humanity;
 
 class Site {
 
-  public function __construct(){
-    # Load page
-    $content = new Content((new Config)->instance()->config['paths']['page']);
-    $content->load();
-    $css = $content->getCss();
-    $js = $content->getJs();
-    $page = $content->getContent();
-    $page = preg_replace('/<\/head>/',"$css</head>",$page);
-    $page = preg_replace('/<\/html>/',"$js</html>",$page);
-
-    echo $page;
-  }
+    public function __construct(){
+        switch($_SERVER['HTTP_ACCEPT']){
+            case "application/view":
+                (new RestApi)->view();
+            break;
+            case "application/widget":
+                (new RestApi)->widget();
+            break;
+            case "application/apps":
+                (new RestApi)->apps();
+            break;
+            default:
+                (new Content)->page();
+        }
+    }
 
 }
 ?>

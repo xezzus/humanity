@@ -3,24 +3,27 @@ namespace humanity;
 
 class Widget {
 
-    public $config;
+    private static $config;
+    private static $js;
+    private static $css;
+    private static $app;
+    private static $view;
+    private static $routing;
     private static $property;
-    public static $routing;
-    public static $cask;
 
     public function __construct(){
+        # Config
+        self::$config = (new Config)->instance()->config;
         # Application
-        $this->app = new Application;
+        self::$app = new Application;
         # View
-        $this->view = new View;
+        self::$view = new View;
         # Js
-        $this->js = (new Js)->instance();
+        self::$js = (new Js)->instance();
         # Css
-        $this->css = (new Css)->instance();
+        self::$css = (new Css)->instance();
         # Routing
         self::$routing = new Routing;
-        # Cask
-        self::$cask = (new Cask)->instance();
     }
 
     public function __get($name){
@@ -30,7 +33,7 @@ class Widget {
 
     public function __call($_name,$value){
         if(isset($value[0]) && !empty($value[0]) && is_array($value[0])) extract($value[0]);
-        $file = (new Config)->instance()->config['paths']['widget'].'/'.self::$property.'/'.$_name.'.phtml';
+        $file = self::$config['paths']['widget'].'/'.self::$property.'/'.$_name.'.phtml';
         if(is_file($file)) require($file);
     }
 

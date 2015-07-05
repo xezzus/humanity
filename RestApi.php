@@ -1,14 +1,18 @@
 <?php
 namespace humanity;
 
-class RestApi extends Application {
+class RestApi {
 
     public $post = [];
+    private $call;
+    private $params;
 
     public function __construct(){
+
         # Header
         header('Content-Type: application/json');
         # Get post
+        $accept = $_SERVER['HTTP_ACCEPT'];
         $this->post = (strstr($_SERVER['CONTENT_TYPE'],'application/json')) ? json_decode(file_get_contents('php://input'),1) : $_POST;
         # Check
         if(!isset($this->post['method'])) die('{}');
@@ -75,7 +79,21 @@ class RestApi extends Application {
         $call = explode('.',$this->post['method']);
         ksort($params,SORT_STRING);
         reset($params);
-        $func = call_user_func_array([$this->{$call[0]},$call[1]],$params);
+        $this->params = $params;
+        $this->call = $call;
+    }
+
+    public function view(){
+    }
+
+    public function widget(){
+        $widget = new Widget;
+        $func = call_user_func([$widget->{$this->call[0]},$this->call[1]],$this->params);
+    }
+
+    public function apps(){
+        $app = new Application;
+        $func = call_user_func_array([$app->{$this->call[0]},$this->call[1]],$this->params);
         if(is_array($func)) $func = json_encode($func);
         else $func = '{}';
         die($func);
