@@ -9,8 +9,6 @@ class RestApi {
 
     public function __construct(){
 
-        # Header
-        header('Content-Type: application/json');
         # Get post
         $accept = $_SERVER['HTTP_ACCEPT'];
         $this->post = (strstr($_SERVER['CONTENT_TYPE'],'application/json')) ? json_decode(file_get_contents('php://input'),1) : $_POST;
@@ -84,11 +82,13 @@ class RestApi {
     }
 
     public function view(){
+        header('Content-Type: text/html');
     }
 
     public function widget(){
         $widget = new Widget;
-        $func = call_user_func([$widget->{$this->call[0]},$this->call[1]],$this->params);
+        header('Content-Type: text/html');
+        call_user_func([$widget->{$this->call[0]},$this->call[1]],$this->params);
     }
 
     public function apps(){
@@ -96,6 +96,7 @@ class RestApi {
         $func = call_user_func_array([$app->{$this->call[0]},$this->call[1]],$this->params);
         if(is_array($func)) $func = json_encode($func);
         else $func = '{}';
+        header('Content-Type: application/json');
         die($func);
     }
 
