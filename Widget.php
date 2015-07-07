@@ -4,8 +4,8 @@ namespace humanity;
 class Widget {
 
     private static $config;
-    private static $js;
-    private static $css;
+    public static $js;
+    public static $css;
     private static $app;
     private static $view;
     private static $routing;

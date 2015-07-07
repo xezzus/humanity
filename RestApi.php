@@ -88,7 +88,9 @@ class RestApi {
     public function widget(){
         $widget = new Widget;
         header('Content-Type: text/html');
+        echo $widget::$css->get();
         call_user_func([$widget->{$this->call[0]},$this->call[1]],$this->params);
+        echo $widget::$js->get();
     }
 
     public function apps(){

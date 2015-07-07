@@ -4,7 +4,7 @@ namespace humanity;
 class Content {
 
     private static $host;
-    private static $config;   
+    private static $config; 
     private static $js;
     private static $css;
     private static $app;
@@ -46,23 +46,10 @@ class Content {
         require $file;
         $content = ob_get_clean();
         # get javascript
-        $js = self::$js->getList();
-        $js = array_unique($js);
-        $js = array_map(function($js){
-            $file = self::$config['paths']['js'].'/'.$js.'.js';
-            if(is_file($file)) return '<script src="http://'.self::$host.'/js/'.$js.'.js"></script>';
-            else return false;
-        },$js);
-        $js = implode("\n",$js);
+        $js = self::$js->get();
         # get css
-        $css = self::$css->getList();
-        $css = array_unique($css);
-        $css = array_map(function($css){
-            $file = self::$config['paths']['css'].'/'.$css.'.css';
-            if(is_file($file)) return '<link rel="stylesheet" href="http://'.self::$host.'/css/'.$css.'.css">';
-            else return false;
-        },$css);
-        $css = implode("\n",$css);
+        $css = self::$css->get();
+        # include for page
         $content = preg_replace('/<\/head>/',"$css</head>",$content);
         $content = preg_replace('/<\/html>/',"$js</html>",$content);
         echo $content;
