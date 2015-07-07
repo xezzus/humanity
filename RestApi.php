@@ -82,12 +82,10 @@ class RestApi {
     }
 
     public function view(){
-        header('Content-Type: text/html');
     }
 
     public function widget(){
         $widget = new Widget;
-        header('Content-Type: text/html');
         echo $widget::$css->get();
         call_user_func([$widget->{$this->call[0]},$this->call[1]],$this->params);
         echo $widget::$js->get();
@@ -98,7 +96,6 @@ class RestApi {
         $func = call_user_func_array([$app->{$this->call[0]},$this->call[1]],$this->params);
         if(is_array($func)) $func = json_encode($func);
         else $func = '{}';
-        header('Content-Type: application/json');
         die($func);
     }
 
