@@ -4,6 +4,7 @@ namespace humanity;
 class Content {
 
     private static $host;
+    private static $path;
     private static $config; 
     private static $js;
     private static $css;
@@ -16,9 +17,14 @@ class Content {
         # Config
         self::$config = (new Config)->instance()->config;
         # Host
-        self::$host = parse_url('http://'.$_SERVER['HTTP_HOST']);
-        if(isset(self::$host['host'])) self::$host = self::$host['host'];
-        else self::$host = '/';
+        self::$host = parse_url('http://'.$_SERVER['HTTP_HOST'])['host'];
+        # Url
+        self::$path = explode('/',parse_url(urldecode($_SERVER['REQUEST_URI']))['path']);
+        foreach(self::$path as $key=>$value){
+            $value = trim($value);
+            if(empty($value)) unset(self::$path[$key]);
+        }
+        self::$path = array_values(self::$path);
         # Application
         self::$app = new Application;
         # View
