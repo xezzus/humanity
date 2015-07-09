@@ -8,14 +8,13 @@ class RestApi {
     private $params;
 
     public function __construct(){
-
         # Get post
         $accept = $_SERVER['HTTP_ACCEPT'];
         $this->post = (strstr($_SERVER['CONTENT_TYPE'],'application/json')) ? json_decode(file_get_contents('php://input'),1) : $_POST;
         # Check
         if(!isset($this->post['method'])) die('{}');
         # Filter
-        if(!preg_match('/^[A-z\d]{1,15}\.[A-z\d]{1,15}$/',$this->post['method'])) die('{}');
+        if(!preg_match('/^[A-z\d]{1,128}\.[A-z\d]{1,128}$/',$this->post['method'])) die('{"msg":"bad symbol"}');
         # Hack
         $this->post['method'] = Html::encode(trim($this->post['method']));
         if(isset($this->post['app_id'])) $this->post['app_id'] = (int) trim($this->post['app_id']);
