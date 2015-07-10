@@ -12,6 +12,7 @@ class Content {
     private static $view;
     private static $widget;
     private static $routing;
+    private static $accept;
 
     public function __construct(){
         # Config
@@ -37,6 +38,8 @@ class Content {
         self::$css = (new Css)->instance();
         # Routing
         self::$routing = new Routing;
+        # Accept
+        self::$accept = (new Accept)->instance();
     }
 
     public function view($name){

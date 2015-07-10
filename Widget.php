@@ -3,13 +3,14 @@ namespace humanity;
 
 class Widget {
 
-    private static $config;
     public static $js;
     public static $css;
+    private static $config;
     private static $app;
     private static $view;
     private static $routing;
     private static $property;
+    private static $accept;
 
     public function __construct(){
         # Config
@@ -24,6 +25,8 @@ class Widget {
         self::$css = (new Css)->instance();
         # Routing
         self::$routing = new Routing;
+        # Accept
+        self::$accept = (new Accept)->instance();
     }
 
     public function __get($name){

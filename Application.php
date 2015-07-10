@@ -6,11 +6,13 @@ class Application {
     private static $singleton;
     private static $config;
     private static $name;
+    private static $accept;
 
     public function __construct($name=null){
         self::$name = $name;
         self::$singleton = (new Singleton)->instance();
         self::$config = (new Config)->instance()->config;
+        self::$accept = (new Accept)->instance();
     }
 
     public function __get($name){
