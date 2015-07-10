@@ -14,7 +14,13 @@ class Accept {
             foreach($accept as $key=>$value){
                 $value = explode('/',$value);
                 $value[1] = explode(';',$value[1]);
-                $this->{$value[0]}[array_shift($value[1])] = array_map(function($value){ return explode('=',$value); },$value[1]);
+                $name = array_shift($value[1]);
+                $data = [];
+                foreach($value[1] as $k=>$v){
+                    $v = explode('=',$v);
+                    $data[$v[0]] = $v[1];
+                }
+                $this->{$value[0]}[$name] = $data;
             }
             self::$instance = $this;
         }
