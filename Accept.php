@@ -10,6 +10,7 @@ class Accept {
 
     public function instance(){
         if(self::$instance === null) {
+            if(!isset($_SERVER['HTTP_ACCEPT'])) $_SERVER['HTTP_ACCEPT'] = '*/*';
             $accept = explode(',',$_SERVER['HTTP_ACCEPT']);
             foreach($accept as $key=>$value){
                 $value = explode('/',$value);
