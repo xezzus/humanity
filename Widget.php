@@ -11,10 +11,18 @@ class Widget {
     private static $routing;
     private static $property;
     private static $accept;
+    private static $path;
 
     public function __construct(){
         # Config
         self::$config = (new Config)->instance()->config;
+        # Url
+        self::$path = explode('/',parse_url(urldecode($_SERVER['REQUEST_URI']))['path']);
+        foreach(self::$path as $key=>$value){
+            $value = trim($value);
+            if(empty($value)) unset(self::$path[$key]);
+        }
+        self::$path = array_values(self::$path);
         # Application
         self::$app = new Application;
         # View
