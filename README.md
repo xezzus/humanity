@@ -1,51 +1,27 @@
 # Humanity PHP Framework
 
-## Application
+## TEMPLATES
 
-```php
-$this->app-nameMethod();
-or
-$this->app->namespace->nameMethod()
+### CSS
 
-file ../apps/nameMethod.php
-
-return function(){
-    return true;
-}
-
-or 
-
-file ../apps/namespace/nameMethod.php
-
-return function(){
-    return true;
-}
+```
+<?php self::$css->add('name_file'); ?>
 ```
 
-## Singleton
+### JS
 
-```php
-return function(){
-    if(!isset($this->singleton->namesingle)){
-        $this->singleton->namesingle = microtime(1)
-    }
-    return $this->singleton->namesingle
-}
+```
+<?php self::$js->add('name_file'); ?>
 ```
 
-## WsDaemon
+### APPS
 
-example
+```
+<?php self::$apps->nameFolder->nameFile($param1,$param2,$param3); ?>
+```
 
-```php
-set_time_limit(0);
-ob_implicit_flush();
+### WIDGET
 
-$ws = new WsDaemon('127.0.0.1',8888);
-
-$ws->run(function($data,$clientId){
-    var_dump($clientId);
-    var_dump($data);
-    return ['clients'=>$clientId,'msg'=>$data];
-});
+```
+<?php self::$widget->nameFolder->nameFile(); ?>
 ```
