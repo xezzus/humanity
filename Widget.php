@@ -15,7 +15,7 @@ class Widget {
 
     public function __construct(){
         # Config
-        self::$config = (new Config)->instance()->config;
+        self::$config = (new Config)->get();
         # Url
         self::$path = explode('/',parse_url(urldecode($_SERVER['REQUEST_URI']))['path']);
         foreach(self::$path as $key=>$value){

@@ -3,8 +3,7 @@ namespace humanity;
 
 class Config {
 
-    private static $instance = null;
-    public $config = [
+    public static $config = [
         'paths'=>[
             'page'=>__DIR__.'/../../../web/page',
             'view'=>__DIR__.'/../../../web/view',
@@ -18,19 +17,12 @@ class Config {
         ]
     ];
 
-    private function __clone(){
-        
-    }
+    public function __construct($config=[]){
+        self::$config = array_merge(self::$config,$config);
+    }    
 
-    public function instance(){
-        if(self::$instance === null){
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-
-    public function load($config){
-        $this->config = array_merge($this->config,$config);
+    public function get(){
+        return self::$config;
     }
 
 }

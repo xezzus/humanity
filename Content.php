@@ -16,7 +16,7 @@ class Content {
 
     public function __construct(){
         # Config
-        self::$config = (new Config)->instance()->config;
+        self::$config = (new Config)->get();
         # Host
         self::$host = parse_url('http://'.$_SERVER['HTTP_HOST'])['host'];
         # Url

@@ -11,7 +11,7 @@ class Application {
     public function __construct($name=null){
         self::$name = $name;
         self::$singleton = (new Singleton)->instance();
-        self::$config = (new Config)->instance()->config;
+        self::$config = (new Config)->get();
         self::$accept = (new Accept)->instance();
     }
 

@@ -28,14 +28,5 @@ class Routing {
         return $this;
     }
 
-    public function path(){
-        $args = func_get_args();
-        foreach($args as $key=>$arg){
-            if(is_callable($arg) && isset($this->uri[$key])) {
-                $arg($this->uri[$key]);
-            }
-        }
-    }
-
 }
 ?>
