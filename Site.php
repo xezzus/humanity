@@ -3,31 +3,44 @@ namespace humanity;
 
 class Site {
 
-    private static $accept;
-    private static $config;
-
     public function __construct(){
 
-        self::$config = (new Config)->get();
-        self::$accept = (new Accept)->instance();
+        $config = (new Config)->get();
+
+        if(!isset($_SERVER['HTTP_ACCEPT'])) $_SERVER['HTTP_ACCEPT'] = '*/*';
+        $acceptSrc = explode(',',$_SERVER['HTTP_ACCEPT']);
+        foreach($acceptSrc as $key=>$value){
+            $value = explode('/',$value);
+            $value[1] = explode(';',$value[1]);
+            $name = array_shift($value[1]);
+            $data = [];
+            foreach($value[1] as $k=>$v){
+                $v = explode('=',$v);
+                $data[$v[0]] = $v[1];
+            }
+            $accept[$value[0]][$name] = $data;
+        }
+
+        unset($acceptSrc,$key,$value,$name,$data,$k,$v);
 
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Max-Age: 31556926'); 
         header('Access-Control-Allow-Credentials: true'); 
         header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT');
-        if(isset(self::$accept->application['view'])){
+
+        if(isset($accept['application']['view'])){
             header('Content-Type: text/html');
             (new RestApi)->view();
-        } else if(isset(self::$accept->application['widget'])){
+        } else if(isset($accept['application']['widget'])){
             header('Content-Type: text/html');
             (new RestApi)->widget();
-        } else if(isset(self::$accept->application['apps'])){
+        } else if(isset($accept['application']['apps'])){
             header('Content-Type: application/json');
             $query = json_decode(file_get_contents('php://input'),1);
             $result = [];
             foreach($query['method'] as $method=>$params){
                 $stableParams = [];
-                $file = self::$config['paths']['apps'].'/'.$method.'.php';
+                $file = $config['core']['apps'].'/'.$method.'.php';
                 $func = require_once($file);
                 $reflection = new \ReflectionFunction($func);
                 foreach($reflection->getParameters() as $key=>$value){

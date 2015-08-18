@@ -8,9 +8,7 @@ class Widget {
     private static $config;
     private static $app;
     private static $view;
-    private static $routing;
     private static $property;
-    private static $accept;
     private static $path;
 
     public function __construct(){
@@ -28,13 +26,9 @@ class Widget {
         # View
         self::$view = new View;
         # Js
-        self::$js = (new Js)->instance();
+        self::$js = new Js;
         # Css
-        self::$css = (new Css)->instance();
-        # Routing
-        self::$routing = new Routing;
-        # Accept
-        self::$accept = (new Accept)->instance();
+        self::$css = new Css;
     }
 
     public function __get($name){
@@ -44,7 +38,7 @@ class Widget {
 
     public function __call($_name,$value){
         if(isset($value[0]) && !empty($value[0]) && is_array($value[0])) extract($value[0]);
-        $file = self::$config['paths']['widget'].'/'.self::$property.'/'.$_name.'.phtml';
+        $file = self::$config['core']['widget'].'/'.self::$property.'/'.$_name.'.phtml';
         if(is_file($file)) require($file);
     }
 

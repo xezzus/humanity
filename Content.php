@@ -11,8 +11,6 @@ class Content {
     private static $app;
     private static $view;
     private static $widget;
-    private static $routing;
-    private static $accept;
 
     public function __construct(){
         # Config
@@ -33,13 +31,9 @@ class Content {
         # Widget
         self::$widget = new Widget;
         # Js
-        self::$js = (new Js)->instance();
+        self::$js = new Js;
         # Css
-        self::$css = (new Css)->instance();
-        # Routing
-        self::$routing = new Routing;
-        # Accept
-        self::$accept = (new Accept)->instance();
+        self::$css = new Css;
     }
 
     public function view($name){
@@ -67,9 +61,9 @@ class Content {
     # $type - page,view
     public function file($name=false){
         if($name === false){
-            $path = self::$config['paths']['page'];
+            $path = self::$config['core']['page'];
         } else {
-            $path = self::$config['paths']['view'].'/'.$name;
+            $path = self::$config['core']['view'].'/'.$name;
         }
         # Route
         $uri = $_SERVER['REQUEST_URI'];

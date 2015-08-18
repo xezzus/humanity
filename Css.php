@@ -3,8 +3,7 @@ namespace humanity;
 
 class Css {
 
-    public $list = [];
-    private static $instance = null;
+    public static $list = [];
     private static $host;
     private static $config;   
 
@@ -17,23 +16,15 @@ class Css {
         else self::$host = '/';
     }
 
-    private function __clone(){
-    }
-
-    public function instance(){
-        if(self::$instance === null) self::$instance = new self();
-        return self::$instance;
-    }
-
     public function add($css){
         if(!is_array($css)) $css = [$css];
-        $this->list = array_merge($this->list,$css);
+        self::$list = array_merge(self::$list,$css);
     }
 
     public function get(){
-        $css = array_unique($this->list);
+        $css = array_unique(self::$list);
         $css = array_map(function($css){
-            $file = self::$config['paths']['css'].'/'.$css.'.css';
+            $file = self::$config['core']['css'].'/'.$css.'.css';
             if(is_file($file)) return '<link rel="stylesheet" href="http://'.self::$host.'/css/'.$css.'.css">';
             else return false;
         },$css);

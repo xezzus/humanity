@@ -5,12 +5,10 @@ class Application {
 
     private static $memory = [];
     private static $config;
-    private static $accept;
     private static $application = [];
 
     public function __construct(){
         self::$config = (new Config)->get();
-        self::$accept = (new Accept)->instance();
     }
 
     public function __get($name){
@@ -21,7 +19,7 @@ class Application {
     public function __call($name,$value){
         array_push(self::$application,$name);
         $file = implode('/',self::$application);
-        $file = self::$config['paths']['apps'].'/'.$file.'.php';
+        $file = self::$config['core']['apps'].'/'.$file.'.php';
         self::$application = [];
         if(is_file($file)) {
             $result = require($file);
