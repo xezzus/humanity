@@ -38,7 +38,7 @@ class Site {
             header('Content-Type: application/json');
             $query = json_decode(file_get_contents('php://input'),1);
             $result = [];
-            foreach($query['method'] as $method=>$params){
+            foreach($query['apps'] as $method=>$params){
                 $stableParams = [];
                 $file = $config['core']['apps'].'/'.$method.'.php';
                 $func = require_once($file);
@@ -54,7 +54,7 @@ class Site {
                     if($count == $key) $app = call_user_method_array($var,$app,$stableParams);
                     else $app = $app->{$var};
                 }
-                $result['method'][$method] = $app;
+                $result['apps'][$method] = $app;
             }
             die(json_encode($result));
         } else {
