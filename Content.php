@@ -11,6 +11,7 @@ class Content {
     private static $app;
     private static $view;
     private static $widget;
+    private static $title;
 
     public function __construct(){
         # Config
@@ -34,6 +35,8 @@ class Content {
         self::$js = new Js;
         # Css
         self::$css = new Css;
+        # Title
+        self::$title = new Title;
     }
 
     public function view($name){
@@ -52,7 +55,10 @@ class Content {
         $js = self::$js->get();
         # get css
         $css = self::$css->get();
+        # get title
+        $title = self::$title->get();
         # include for page
+        $content = preg_replace('/<head>/',"<head>$title",$content);
         $content = preg_replace('/<\/head>/',"$css</head>",$content);
         $content = preg_replace('/<\/html>/',"$js</html>",$content);
         echo $content;
