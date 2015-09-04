@@ -12,6 +12,7 @@ class Title {
     }
 
     public function get(){
+        self::$memory = array_reverse(self::$memory);
         return '<title>'.implode(' - ',self::$memory).'</title>';
     }
 
