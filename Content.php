@@ -12,6 +12,7 @@ class Content {
     private static $view;
     private static $widget;
     private static $title;
+    private static $uri;
 
     public function __construct(){
         # Config
@@ -37,6 +38,12 @@ class Content {
         self::$css = new Css;
         # Title
         self::$title = new Title;
+        # Uri
+        self::$uri = explode('/',$_SERVER['REQUEST_URI']);
+        foreach(self::$uri as $key=>$value){
+            if(empty($value)) unset(self::$uri[$key]);
+        }
+        self::$uri = array_values(self::$uri);
     }
 
     public function view($name){
