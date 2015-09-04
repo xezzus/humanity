@@ -42,6 +42,7 @@ class Content {
         self::$uri = explode('/',$_SERVER['REQUEST_URI']);
         foreach(self::$uri as $key=>$value){
             if(empty($value)) unset(self::$uri[$key]);
+            else self::$uri[$key] = urldecode($value);
         }
         self::$uri = array_values(self::$uri);
     }
