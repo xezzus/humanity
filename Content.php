@@ -68,7 +68,7 @@ class Content {
         # include for page
         $content = preg_replace('/<head>/',"<head>$title",$content);
         $content = preg_replace('/<\/head>/',"$css</head>",$content);
-        $content = preg_replace('/<\/html>/',"$js</html>",$content);
+        $content = preg_replace('/<\/body>/',"$js</body>",$content);
         echo $content;
     }
 
