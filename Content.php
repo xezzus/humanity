@@ -80,11 +80,8 @@ class Content {
             $path = self::$config['core']['view'].'/'.$name;
         }
         # Route
-        $uri = $_SERVER['REQUEST_URI'];
-        $uri = urldecode($uri);
-        $uri = strtolower($uri);
-        $uri = preg_replace("/[^a-z\d_\-\/]/",'',$uri);
-        $uri = explode('/',$uri);
+        $uri = self::$path;
+        array_push($uri,'');
         foreach($uri as $key=>$value){ if(empty(trim($value))) { unset($uri[$key]); continue; } }
         $uri = array_values($uri);
         $isFile = null;
