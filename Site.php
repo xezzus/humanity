@@ -54,7 +54,7 @@ class Site {
                     if($count == $key) $app = call_user_method_array($var,$app,$stableParams);
                     else $app = $app->{$var};
                 }
-                $result['apps'][$method] = $app;
+                $result[$method] = $app;
             }
             die(json_encode($result));
         } else {
