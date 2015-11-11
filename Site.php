@@ -38,7 +38,7 @@ class Site {
             header('Content-Type: application/json');
             $query = json_decode(file_get_contents('php://input'),1);
             $result = [];
-            foreach($query['apps'] as $method=>$params){
+            foreach($query as $method=>$params){
                 $stableParams = [];
                 $file = $config['core']['apps'].'/'.$method.'.php';
                 $func = require_once($file);
