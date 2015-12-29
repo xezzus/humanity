@@ -13,6 +13,10 @@ class Title {
 
     public function get(){
         self::$memory = array_reverse(self::$memory);
+        foreach(self::$memory as $key=>$value){
+            $value = urldecode($value);
+            self::$memory[$key] = $value;
+        }
         return '<title>'.implode(' - ',self::$memory).'</title>';
     }
 
