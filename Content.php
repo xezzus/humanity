@@ -71,8 +71,8 @@ class Content {
         # get description
         $description = self::$description->get();
         # include for page
-        $content = preg_replace('/<head>/',"<head>$title",$content);
         $content = preg_replace('/<head>/',"<head>$description",$content);
+        $content = preg_replace('/<head>/',"<head>$title",$content);
         $content = preg_replace('/<\/head>/',"$css</head>",$content);
         $content = preg_replace('/<\/body>/',"$js</body>",$content);
         echo $content;
