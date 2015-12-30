@@ -69,7 +69,7 @@ class Content {
         # get title
         $title = self::$title->get();
         # get description
-        $description = self::$desctiption->get();
+        $description = self::$description->get();
         # include for page
         $content = preg_replace('/<head>/',"<head>$title",$content);
         $content = preg_replace('/<head>/',"<head>$description",$content);
