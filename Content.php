@@ -73,6 +73,8 @@ class Content {
         $title = self::$title->get();
         # get description
         $description = self::$description->get();
+        # get keywords
+        $keywords = self::$keywords->get();
         # include for page
         $content = preg_replace('/<head>/',"<head>$keywords",$content);
         $content = preg_replace('/<head>/',"<head>$description",$content);
