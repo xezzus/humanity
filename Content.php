@@ -38,6 +38,8 @@ class Content {
         self::$css = new Css;
         # Title
         self::$title = new Title;
+        # Desctiption
+        self::$description = new Description;
         # Uri
         self::$uri = explode('/',$_SERVER['REQUEST_URI']);
         foreach(self::$uri as $key=>$value){
@@ -65,8 +67,11 @@ class Content {
         $css = self::$css->get();
         # get title
         $title = self::$title->get();
+        # get description
+        $description = self::$desctiption->get();
         # include for page
         $content = preg_replace('/<head>/',"<head>$title",$content);
+        $content = preg_replace('/<head>/',"<head>$description",$content);
         $content = preg_replace('/<\/head>/',"$css</head>",$content);
         $content = preg_replace('/<\/body>/',"$js</body>",$content);
         echo $content;
