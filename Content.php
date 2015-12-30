@@ -12,6 +12,7 @@ class Content {
     private static $view;
     private static $widget;
     private static $title;
+    private static $description;
     private static $uri;
 
     public function __construct(){
