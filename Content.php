@@ -13,6 +13,7 @@ class Content {
     private static $widget;
     private static $title;
     private static $description;
+    private static $keywords;
     private static $uri;
 
     public function __construct(){
@@ -41,6 +42,8 @@ class Content {
         self::$title = new Title;
         # Desctiption
         self::$description = new Description;
+        # Keywords
+        self::$keywords = new Keywords;
         # Uri
         self::$uri = explode('/',$_SERVER['REQUEST_URI']);
         foreach(self::$uri as $key=>$value){
@@ -71,6 +74,7 @@ class Content {
         # get description
         $description = self::$description->get();
         # include for page
+        $content = preg_replace('/<head>/',"<head>$keywords",$content);
         $content = preg_replace('/<head>/',"<head>$description",$content);
         $content = preg_replace('/<head>/',"<head>$title",$content);
         $content = preg_replace('/<\/head>/',"$css</head>",$content);
