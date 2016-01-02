@@ -79,7 +79,7 @@ class Content {
         $content = preg_replace('/<head>/',"<head>$keywords",$content);
         $content = preg_replace('/<head>/',"<head>$description",$content);
         $content = preg_replace('/<head>/',"<head>$title",$content);
-        $content = preg_replace('/<\/head>/',"$css</head>",$content);
+        $content = preg_replace('/<\/body>/',"$css</body>",$content);
         $content = preg_replace('/<\/body>/',"$js</body>",$content);
         echo $content;
     }
