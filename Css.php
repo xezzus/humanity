@@ -23,13 +23,14 @@ class Css {
 
     public function get(){
         $css = array_unique(self::$list);
-        $css = array_map(function($css){
-            $file = self::$config['core']['css'].'/'.$css.'.css';
-            if(is_file($file)) return '<link rel="stylesheet" href="http://'.self::$host.'/css/'.$css.'.css">';
-            else return false;
-        },$css);
-        $css = implode("\n",$css);
-        return $css;
+        $code = '';
+        foreach($css as $name){
+            $file = self::$config['core']['css'].'/'.$name.'.css';
+            if(is_file($file)) $code .= file_get_contents($file);
+        }
+        $cache = self::$config['core']['css'].'/../cache/stylesheet.css';
+        file_put_contents($cache,$code);
+        return '<link rel="stylesheet" href="http://'.self::$host.'/cache/stylesheet.css">';
     }
 
     public function compile(){
