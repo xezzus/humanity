@@ -23,13 +23,14 @@ class Js {
 
     public function get(){
         $js = array_unique(self::$list);
-        $js = array_map(function($js){
-            $file = self::$config['core']['js'].'/'.$js.'.js';
-            if(is_file($file)) return '<script src="http://'.self::$host.'/js/'.$js.'.js"></script>';
-            else return false;
-        },$js);
-        $js = implode("\n",$js);
-        return $js;
+        $code = '';
+        foreach($js as $name){
+            $file = self::$config['core']['js'].'/'.$name.'.js';
+            if(is_file($file)) $code .= file_get_contents($file);
+        }
+        $cache = self::$config['core']['js'].'/../cache/javascript.js';
+        file_put_contents($cache,$code);
+        return '<script async src="http://'.self::$host.'/cache/javascript.js"></script>';
     }
 
     public function compile(){
