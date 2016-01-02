@@ -30,7 +30,15 @@ class Css {
         }
         $cache = self::$config['core']['css'].'/../cache/stylesheet.css';
         file_put_contents($cache,$code);
-        return '<link rel="stylesheet" href="http://'.self::$host.'/cache/stylesheet.css">';
+        return "
+<script async>
+var a=document.createElement(\"link\");
+a.rel=\"stylesheet\";
+a.href=\"/cache/stylesheet.css\";
+document.getElementsByTagName(\"head\")[0].appendChild(a)
+</script>
+";
+        return '<link async rel="stylesheet" href="http://'.self::$host.'/cache/stylesheet.css">';
     }
 
     public function compile(){
