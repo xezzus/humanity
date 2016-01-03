@@ -81,6 +81,8 @@ class Content {
         $content = preg_replace('/<head>/',"<head>$title",$content);
         $content = preg_replace('/<\/head>/',"$css</head>",$content);
         $content = preg_replace('/<\/body>/',"$js</body>",$content);
+        $minify = new MinifyHTML($content);
+        $content = $minify->compress();
         echo $content;
     }
 
