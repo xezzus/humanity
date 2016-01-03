@@ -28,6 +28,9 @@ class Css {
             $file = self::$config['core']['css'].'/'.$name.'.css';
             if(is_file($file)) $code .= file_get_contents($file);
         }
+        $minifier = new \MatthiasMullie\Minify\CSS();
+        $minifier->add($code);
+        $code = $minifier->minify();
         return "<style>$code</style>";
     }
 

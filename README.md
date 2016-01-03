@@ -1,3 +1,5 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/xezzus/humanity/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/xezzus/humanity/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/xezzus/humanity/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/xezzus/humanity/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/xezzus/humanity/badges/build.png?b=master)](https://scrutinizer-ci.com/g/xezzus/humanity/build-status/master)
+
 # Humanity PHP Framework
 
 ## TEMPLATES

@@ -29,6 +29,9 @@ class Js {
             if(is_file($file)) $code .= file_get_contents($file);
         }
         $cache = self::$config['core']['js'].'/../cache/javascript.js';
+        $minifier = new \MatthiasMullie\Minify\JS();
+        $minifier->add($code);
+        $code = $minifier->minify();
         file_put_contents($cache,$code);
         return '<script async src="http://'.self::$host.'/cache/javascript.js"></script>';
     }
