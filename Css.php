@@ -28,17 +28,7 @@ class Css {
             $file = self::$config['core']['css'].'/'.$name.'.css';
             if(is_file($file)) $code .= file_get_contents($file);
         }
-        $cache = self::$config['core']['css'].'/../cache/stylesheet.css';
-        file_put_contents($cache,$code);
-        return "
-<script async>
-var a=document.createElement(\"link\");
-a.rel=\"stylesheet\";
-a.href=\"/cache/stylesheet.css\";
-document.getElementsByTagName(\"head\")[0].appendChild(a)
-</script>
-";
-        return '<link async rel="stylesheet" href="http://'.self::$host.'/cache/stylesheet.css">';
+        return "<style>$code</style>";
     }
 
     public function compile(){
