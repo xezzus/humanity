@@ -23,22 +23,21 @@ class Js {
 
     public function get(){
         $js = array_unique(self::$list);
-        if(!empty($js)) $jsQuery = '?'.implode(':',$js);
-        else $jsQuery = '';
-        return '<script async src="http://'.self::$host.'/javascript.js'.$jsQuery.'"></script>';
-    }
-
-    public function compile($query){
-        $js = $query;
         $code = '';
         foreach($js as $name){
             $file = self::$config['core']['js'].'/'.$name.'.js';
             if(is_file($file)) $code .= file_get_contents($file);
         }
+        $cache = self::$config['core']['js'].'/../cache/javascript.js';
         $minifier = new \MatthiasMullie\Minify\JS();
         $minifier->add($code);
         $code = $minifier->minify();
-        return $code;
+        file_put_contents($cache,$code);
+        return '<script async src="http://'.self::$host.'/javascript.js"></script>';
+    }
+
+    public function compile(){
+        # ...
     }
 
 }
