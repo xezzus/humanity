@@ -3,6 +3,8 @@ namespace humanity;
 
 class Site {
 
+    private static $js;
+
     public function __construct(){
 
         $config = (new Config)->get();
@@ -22,6 +24,16 @@ class Site {
         }
 
         unset($acceptSrc,$key,$value,$name,$data,$k,$v);
+
+        $requestUri = parse_url($_SERVER['REQUEST_URI']);
+        if($requestUri['path'] == '/javascript.js'){
+            header('Content-Type: application/javascript');
+            if(isset($requestUri['query'])){
+                $query = explode(':',$requestUri['query']);
+                (new Content)->js($query);
+            }
+            exit;
+        }
 
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Max-Age: 31556926'); 

@@ -65,10 +65,10 @@ class Content {
         ob_start();
         require $file;
         $content = ob_get_clean();
-        # get javascript
-        $js = self::$js->get();
         # get css
         $css = self::$css->get();
+        # get css
+        $js = self::$js->get();
         # get title
         $title = self::$title->get();
         # get description
@@ -81,7 +81,13 @@ class Content {
         $content = preg_replace('/<head>/',"<head>$title",$content);
         $content = preg_replace('/<\/head>/',"$css</head>",$content);
         $content = preg_replace('/<\/body>/',"$js</body>",$content);
+        $minify = new MinifyHTML($content);
+        $content = $minify->compress();
         echo $content;
+    }
+
+    public function js($query){
+        echo self::$js->compile($query);
     }
 
     # $type - page,view
