@@ -27,7 +27,7 @@ class Uri {
     }
 
     public function host(){
-        return parse_url('http://'.$_SERVER['HTTP_HOST'])['host']
+        return parse_url('http://'.$_SERVER['HTTP_HOST'])['host'];
     }
 
 }
