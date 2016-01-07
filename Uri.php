@@ -23,7 +23,7 @@ class Uri {
 
     public function part($number){
         if(isset($this->requestUri[$number])) return (string) urldecode($this->requestUri[$number]);
-        else return '';
+        else return false;
     }
 
     public function host(){
