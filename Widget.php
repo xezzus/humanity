@@ -5,6 +5,9 @@ class Widget {
 
     public static $js;
     public static $css;
+    public static $title;
+    public static $description;
+    public static $keywords;
     private static $config;
     private static $app;
     private static $view;
@@ -15,13 +18,6 @@ class Widget {
     public function __construct(){
         # Config
         self::$config = (new Config)->get();
-        # Url
-        self::$path = explode('/',parse_url(urldecode($_SERVER['REQUEST_URI']))['path']);
-        foreach(self::$path as $key=>$value){
-            $value = trim($value);
-            if(empty($value)) unset(self::$path[$key]);
-        }
-        self::$path = array_values(self::$path);
         # Application
         self::$app = new Application;
         # View
@@ -30,6 +26,14 @@ class Widget {
         self::$js = new Js;
         # Css
         self::$css = new Css;
+        # Title
+        self::$title = new Title;
+        # Desctiption
+        self::$description = new Description;
+        # Keywords
+        self::$keywords = new Keywords;
+        # Uri
+        self::$uri = new Uri;
     }
 
     public function __get($name){
