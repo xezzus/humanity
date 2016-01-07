@@ -7,7 +7,7 @@ class Uri {
 
     public function __construct(){
         $this->requestUri = $_SERVER['REQUEST_URI'];
-        $tmp = explode('/',$this->requiestUri);
+        $tmp = explode('/',$this->requestUri);
         foreach($tmp as $key=>$value){
             $value = trim($value);
             if(empty($value)) unset($tmp[$key]);
