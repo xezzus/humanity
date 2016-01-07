@@ -10,6 +10,7 @@ class Widget {
     private static $view;
     private static $property;
     private static $path;
+    private static $uri;
 
     public function __construct(){
         # Config

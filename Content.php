@@ -19,15 +19,6 @@ class Content {
     public function __construct(){
         # Config
         self::$config = (new Config)->get();
-        # Host
-        self::$host = parse_url('http://'.$_SERVER['HTTP_HOST'])['host'];
-        # Url
-        self::$path = explode('/',parse_url(urldecode($_SERVER['REQUEST_URI']))['path']);
-        foreach(self::$path as $key=>$value){
-            $value = trim($value);
-            if(empty($value)) unset(self::$path[$key]);
-        }
-        self::$path = array_values(self::$path);
         # Application
         self::$app = new Application;
         # View
@@ -45,12 +36,7 @@ class Content {
         # Keywords
         self::$keywords = new Keywords;
         # Uri
-        self::$uri = explode('/',$_SERVER['REQUEST_URI']);
-        foreach(self::$uri as $key=>$value){
-            if(empty($value)) unset(self::$uri[$key]);
-            else self::$uri[$key] = urldecode($value);
-        }
-        self::$uri = array_values(self::$uri);
+        self::$uri = new Uri;
     }
 
     public function view($name){
