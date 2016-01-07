@@ -84,7 +84,7 @@ class Content {
             $path = self::$config['core']['view'].'/'.$name;
         }
         # Route
-        $uri = self::$path;
+        $uri = self::$uri->arr();
         array_push($uri,'');
         foreach($uri as $key=>$value){ if(empty(trim($value))) { unset($uri[$key]); continue; } }
         $uri = array_values($uri);

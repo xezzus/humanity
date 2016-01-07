@@ -30,5 +30,9 @@ class Uri {
         return parse_url('http://'.$_SERVER['HTTP_HOST'])['host'];
     }
 
+    public function arr(){
+        return $this->requestUri;
+    }
+
 }
 ?>
